@@ -1,4 +1,3 @@
-#Meant to be used in repl.it
 import time 
 import random
 import replit
@@ -6,14 +5,18 @@ import sys
 
 #Variables
 playlists = []
-allsongs = ["Billy Jean", "Circles", "XO"]
+allsongs = []
 shuffle = False
 pause = False
 start = 0
-global playS
-playS = False
-global playP
-playP = False
+global playSong
+playSong = False
+global playPlay
+playPlay = False
+global createdPlaylist
+createdPlaylist = False
+global recalledSong
+recalledSong = False
 
 def clear():
   replit.clear()
@@ -43,7 +46,7 @@ def choice1():
   if desire == "1":
     playlistEdit()
   elif desire == "2":
-    playSong()
+    initSong()
   elif desire == "3":
     playPlaylist()
   elif desire == "4":
@@ -70,23 +73,28 @@ def playlistEdit():
     
 #They create a new playlist(list) with a user assigned name
 def createPlaylist():
-  clear()
-  in1 = input("Name of Playlist?")
-  #Adds the playlist name to our list of playlist names
-  playlists.append(in1)
-  global a
-  #Creates the list under the global variable of a
-  a = vars()[in1] = []
-  clear()
-  print("Adding songs to " + in1 + "(Type done when finished):")
-  while True:
-    in2 = input("\n")
-    if in2 != "" and in2 != "done":
-      a.append(in2)
-      allsongs.append(in2)
-    elif in2 == "done":
-      #print(len(a))
-      choice1()
+  if createdPlaylist == True:
+    print("You already have a playlist!!")
+    choice1()
+  elif createdPlaylist == False:
+    created()
+    clear()
+    in1 = input("Name of Playlist?")
+    #Adds the playlist name to our list of playlist names
+    playlists.append(in1)
+    global a
+    #Creates the list under the global variable of a
+    a = vars()[in1] = []
+    clear()
+    print("Adding songs to " + in1 + "(Type done when finished):")
+    while True:
+      in2 = input("\n")
+      if in2 != "" and in2 != "done":
+        a.append(in2)
+        allsongs.append(in2)
+      elif in2 == "done":
+        #print(len(a))
+        choice1()
       
 #Add to Playlist 
 def addPlaylist():
@@ -133,7 +141,7 @@ def removePlaylist():
     choice1()
       
 #Play a Songs
-def playSong():
+def initSong():
   global shuffle
   shuffle = False
   clear()
@@ -158,6 +166,7 @@ def playingSong():
       pauseHandler()
     elif songOptions == "2":
       sFalse()
+      recalledFalse()
       choice1()
     elif songOptions == "3":
       shuffleHandler()
@@ -166,13 +175,13 @@ def playingSong():
     elif songOptions == "5":
       previous()
     elif songOptions == "6":
-      playSong()
+      initSong()
     else:
-      playSong()
+      initSong()
       
   else:
     print("You don't have that song stored!!\n")
-    playSong()
+    initSong()
     
 def playPlaylist():
   clear()
@@ -208,6 +217,7 @@ def playing():
     pauseHandler()
   elif songOptions == "2":
     pFalse()
+    recalledFalse()
     choice1()
   elif songOptions == "3":
     shuffleHandler()
@@ -216,58 +226,77 @@ def playing():
   elif songOptions == "5":
     previous()
   elif songOptions == "6":
-    playSong()
+    initSong()
   else:
-    playSong()
+    initSong()
         
   
     
 #Welcome to the hell hole
 
 def previous():
-  if playS == True:
-    recallSong()
-    playingSong()
-  elif playP == True:
-    recallSong()
-    playing()
-
-def shuffleHandler():
-  if shuffle == True:
-    if playS == True:
-      shuffFalse()
-      playingSong()
-    elif playP == True:
-      shuffFalse()
-      playing()
-  elif shuffle == False:
-    if playS == True:
-      shuffTrue()
-      playingSong()
-    elif playP == True:
-      shuffTrue()
-      playing()
-
-def skipper():
-  saveSong()
-  if shuffle == True:
-    if playS == True:
-      setsongA()
-      playingSong()
-    elif playP == True:
-      setsongB()
-      playing()
-      
-  elif shuffle == False:
-    addIndex()
-    if playS == True:
+  if playSong == True:
+    if recalledSong == True:
+      subtractIndex()
       if start <= int(len(allsongs) - 1):
         setsong1()
         playingSong()
       elif start > int(len(allsongs) - 1):
         rsS()
         playingSong()
-    elif playP == True:
+    elif recalledSong == False:
+      recallSong()
+      playingSong()
+      
+  elif playPlay == True:
+    if recalledSong == True:
+      subtractIndex()
+      if start <= int(len(a) - 1):
+        setsong2()
+        playing()
+      elif start > int(len(a) - 1):
+        rsP()
+        playing()
+    elif recalledSong == False:
+      recallSong()
+      playing()
+
+def shuffleHandler():
+  if shuffle == True:
+    if playSong == True:
+      shuffFalse()
+      playingSong()
+    elif playPlay == True:
+      shuffFalse()
+      playing()
+  elif shuffle == False:
+    if playSong == True:
+      shuffTrue()
+      playingSong()
+    elif playPlay == True:
+      shuffTrue()
+      playing()
+
+def skipper():
+  saveSong()
+  if shuffle == True:
+    if playSong == True:
+      setsongA()
+      playingSong()
+    elif playPlay == True:
+      setsongB()
+      playing()
+      
+  elif shuffle == False:
+    addIndex()
+    if playSong == True:
+      if start <= int(len(allsongs) - 1):
+        setsong1()
+        playingSong()
+      elif start > int(len(allsongs) - 1):
+        rsS()
+        playingSong()
+    elif playPlay == True:
       if start <= int(len(a) - 1):
         setsong2()
         playing()
@@ -276,7 +305,7 @@ def skipper():
         playing()
         
 def pauseHandler():
-  if playS == True:
+  if playSong == True:
     if pause == False:
       pauseTrue()
       while pause == True:
@@ -287,7 +316,7 @@ def pauseHandler():
           pauseFalse()
           break
       playingSong()
-  elif playP == True:
+  elif playPlay == True:
     if pause == False:
       pauseTrue()
       while pause == True:
@@ -303,7 +332,16 @@ def saveSong():
   global saved 
   saved = song 
   
+def recalledFalse():
+  global recalledSong 
+  recalledSong = False
+
+def recalledTrue():
+  global recalledSong
+  recalledSong = True
+
 def recallSong():
+  recalledTrue()
   global song 
   song = saved
 
@@ -326,10 +364,16 @@ def setsong2():
   song = a[start]
 
 def addIndex():
-  if playS == True:
-    startS()
-  elif playP == True:
-    startP()
+  if playSong == True:
+    startS1()
+  elif playPlay == True:
+    startP1()
+    
+def subtractIndex():
+  if playSong == True:
+    startS2()
+  elif playPlay == True:
+    startP2()
     
 def rsS():
   global song 
@@ -339,38 +383,52 @@ def rsP():
   global song 
   song = a[0]
     
-def startS():
+def startS1():
   global start
   start = allsongs.index(str(song))
   addStart()
   
-def startP():
+def startP1():
   global start
   start = a.index(str(song))
   addStart()
-  
+
+def startS2():
+  global start 
+  start = allsongs.index(str(song))
+  subtractStart()
+
+def startP2():
+  global start 
+  start = a.index(str(song))
+  subtractStart()
+
 def addStart():
   global start
   start = start + 1
+  
+def subtractStart():
+  global start 
+  start = start - 1
 
 def sTrue():
-  global playS
-  playS = True 
+  global playSong
+  playSong = True 
   
 def sFalse():
-  global playS
-  playS = False 
+  global playSong
+  playSong = False 
   
 def pTrue():
-  global playP 
-  playP = True 
+  global playPlay 
+  playPlay = True 
   
 def pFalse():
-  global playP 
-  playP = False
+  global playPlay 
+  playPlay = False
   
 def pauseTrue():
-  if playS == True:
+  if playSong == True:
     global pause 
     pause = True 
   
@@ -385,6 +443,10 @@ def shuffTrue():
 def shuffFalse():
   global shuffle 
   shuffle = False
+  
+def created():
+  global createdPlaylist 
+  createdPlaylist = True
   
   
 init()
