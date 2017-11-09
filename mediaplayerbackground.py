@@ -387,5 +387,5 @@ def shuffFalse():
   shuffle = False
   
   
-#init()
-choice1()
+init()
+#choice1()
