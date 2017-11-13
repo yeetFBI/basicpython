@@ -347,13 +347,19 @@ def recallSong():
 
 def setsongA():
   r = random.choice(allsongs)
-  global song 
-  song = r
+  if r == saved:
+    r = random.choice(allsongs)
+  elif r != saved:
+    global song 
+    song = r
   
 def setsongB():
   r = random.choice(a)
-  global song 
-  song = r
+  if r == saved:
+    r = random.choice(a)
+  elif r != saved:
+    global song 
+    song = r
       
 def setsong1():
   global song 
