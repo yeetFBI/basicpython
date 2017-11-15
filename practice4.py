@@ -69,4 +69,4 @@ def error():
   print("Error!!!")
   main()
     
-init()
+main()
