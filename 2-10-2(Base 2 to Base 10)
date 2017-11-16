@@ -1,0 +1,59 @@
+#2-10-2
+#By Caleb Turner and Jaxon McKinlay
+#Will convert decimal to binary and vice versa
+#SQUID
+import replit 
+import time 
+
+def clear():
+  replit.clear()
+  
+def wait(float):
+  time.sleep(float)
+  
+def init():
+  print("  _____          __     ____            _____   ")
+  wait(.5)
+  print(" / ___ `.       /  |  .'    '.         / ___ `. ")
+  wait(.5)
+  print("|_/___) | ______`| | |  .--.  | ______|_/___) | ")
+  wait(.5)
+  print(" .'____.'|______|| | | |    | ||______|.'____.' ")
+  wait(.5)
+  print("/ /_____        _| |_|  `--'  |       / /_____  ")
+  wait(.5)
+  print("|_______|      |_____|'.____.'        |_______| ")
+  wait(.5)
+  print("By Caleb Turner and Jaxon McKinlay")
+  wait(3)
+  clear()
+  main()
+  
+def main():
+  print("Would you like to:\n[1]Convert Binary to Decimal\n[2]Decimal to Binary\n[3]Quit")
+  convert = input("")
+  if convert == "1":
+    bintodec()
+  elif convert == "2":
+    dectobin()
+  elif convert == "3":
+    clear()
+  else:
+    print("Error!")
+    main()
+
+def bintodec():
+  binary = input("Please Enter Your Binary Number:\n")
+  clear()
+  decimal = int(binary, 2)
+  print("Original Binary: " + str(binary) + "\nDecimal: " + str(decimal) + "\n------------------")
+  main()
+  
+def dectobin():
+  decimal = int(input("Please Enter Your Decimal Number:\n"))
+  clear()
+  binary = (bin(decimal)[2:])
+  print("Original Decimal: " + str(decimal) + "\nBinary: " + str(binary) + "\n------------------")
+  main()
+  
+init()
