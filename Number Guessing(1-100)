@@ -1,0 +1,59 @@
+#Guessin Game
+#By Caleb Turner and Jaxon McKinlay
+#Will ask ye to guess a number
+#SQUID
+import random 
+import replit
+import time
+
+ranger = range(0, 101)
+ran_num = random.choice(ranger)
+guesses = 0
+
+def clear():
+  replit.clear()
+  
+def wait(float):
+  time.sleep(float)
+
+def addguess():
+  global guesses
+  guesses = guesses + 1
+
+def init():
+  clear()
+  print(" _   _                 _____                     ")
+  wait(.5)
+  print("| \ | |               |  __ \                    ")
+  wait(.5)
+  print("|  \| |_   _ _ __ ___ | |  \/_   _  ___  ___ ___ ")
+  wait(.5)
+  print("| . ` | | | | '_ ` _ \| | __| | | |/ _ \/ __/ __|")
+  wait(.5)
+  print("| |\  | |_| | | | | | | |_\ \ |_| |  __/\__ \__ \ ")
+  wait(.5)
+  print("\_| \_/\__,_|_| |_| |_|\____/\__,_|\___||___/___/")
+  wait(.5)
+  print("By Caleb Turner and Jaxon McKinlay")
+  wait(2)
+  game()
+
+def game():
+  clear()
+  guess = input("I'm thinking of a number...\nWhat's the number?(Type done to give up)")
+  
+  if int(guess) == ran_num:
+    addguess()
+    print("Hey, you got it!! It only took you " + str(guesses) + " tries!")
+    
+  elif int(guess) > ran_num:
+    addguess()
+    print("Too high!")
+    game()
+    
+  elif int(guess) < ran_num:
+    addguess()
+    print("Too low!")
+    game()
+    
+init()
