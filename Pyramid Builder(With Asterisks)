@@ -1,0 +1,61 @@
+#Pyramid Build
+#By Caleb Turner and Jaxon McKinlay
+#Builds a pyramid however high you want it
+#SQUID
+import time 
+import replit 
+
+def clear():
+  replit.clear()
+  
+def wait(float):
+  time.sleep(float)
+
+def init():
+  clear()
+  print("______                          _     ___   __    ")
+  wait(.5)
+  print("| ___ \                        (_)   | \ \ / /    ")
+  wait(.5)
+  print("| |_/ /   _ _ __ __ _ _ __ ___  _  __| |\ V /___  ")
+  wait(.5)
+  print("|  __/ | | | '__/ _` | '_ ` _ \| |/ _` | \ // _ \ ")
+  wait(.5)
+  print("| |  | |_| | | | (_| | | | | | | | (_| | | | (_) |")
+  wait(.5)
+  print("\_|   \__, |_|  \__,_|_| |_| |_|_|\__,_| \_/\___/ ")
+  wait(.5)
+  print("       __/ |                                      ")
+  wait(.5)
+  print("      |___/                                       ")
+  wait(.5)
+  print("By Caleb Turner and Jaxon McKinlay")
+  wait(3)
+  main()
+  
+def main():
+  clear()
+  height = int(input("How tall would you like your pyramid? "))
+  currentnum = 1
+  currentheight = height
+  print(" " * currentheight + "*" * currentnum)
+  for number in range(0, (height)):
+    currentnum = currentnum + 2
+    currentheight = currentheight - 1
+    print(" " * currentheight + "*" * currentnum)
+  restart()
+  
+def restart():
+  rs = input("Make another?(y/n) ")
+  if rs == "y":
+    main()
+  elif rs == "n":
+    clear()
+    print("Bye!")
+    wait(3)
+    clear()
+  else:
+    restart()
+
+init()
+  
